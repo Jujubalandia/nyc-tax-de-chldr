@@ -1,0 +1,15 @@
+# general python excludes
+.vscode/
+.Python
+build/
+develop-eggs/
+dist/
+tripfiles/
+.env
+.venv
+env/
+venv/
+data-files/
+.c9/
+c9/
+.c9/*
