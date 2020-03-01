@@ -1,0 +1,43 @@
+SELECT ROUND(SUM(trip_distance)/COUNT(trip_distance),2) as avg_distance FROM "bd_nyc"."trips" 
+WHERE passenger_count <= 2 AND trip_distance > 0;
+
+SELECT vendor_id, CAST(SUM(total_amount) AS DECIMAL(15, 2)) AS money_raised
+FROM "bd_nyc"."trips"
+WHERE total_amount > 0 AND vendor_id IS NOT NULL
+GROUP BY  vendor_id
+ORDER BY  money_raised DESC; 
+
+SELECT 
+   extract(year FROM cast(from_iso8601_timestamp(pickup_datetime) AS date)) AS ano, 
+   extract(month FROM cast(from_iso8601_timestamp(pickup_datetime) AS date)) AS mes,
+   count(payment_type) as num
+FROM "bd_nyc"."trips"
+WHERE LOWER(payment_type) = 'cash'
+GROUP BY extract(year FROM cast(from_iso8601_timestamp(pickup_datetime) AS date)), 
+         extract(month FROM cast(from_iso8601_timestamp(pickup_datetime) AS date))
+ORDER BY  ano, mes ASC; 
+
+SELECT 
+   extract(day FROM cast(from_iso8601_timestamp(pickup_datetime) AS date)) AS day, 
+   count(tip_amount) as numtipday
+FROM "bd_nyc"."trips"
+WHERE 
+   tip_amount > 0 AND
+   extract(year FROM cast(from_iso8601_timestamp(pickup_datetime) AS date)) = 2012 AND
+   extract(month FROM cast(from_iso8601_timestamp(pickup_datetime) AS date)) BETWEEN 10 AND 12
+GROUP BY extract(day FROM cast(from_iso8601_timestamp(pickup_datetime) AS date))
+ORDER BY  day ASC; 
+
+
+SELECT SUM(date_diff('minute', from_iso8601_timestamp(pickup_datetime), from_iso8601_timestamp(dropoff_datetime)))/COUNT(dropoff_datetime) AS avg_duration
+FROM "bd_nyc"."trips"
+WHERE extract(dow
+FROM date (cast(from_iso8601_timestamp(pickup_datetime) AS date))) BETWEEN 6 AND 7;
+
+SELECT 
+   pickup_longitude, pickup_latitude
+FROM "bd_nyc"."trips"
+WHERE 
+   pickup_longitude IS NOT NULL AND 
+   pickup_latitude IS NOT NULL AND
+   extract(year FROM cast(from_iso8601_timestamp(pickup_datetime) AS date)) = 2010
