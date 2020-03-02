@@ -61,26 +61,82 @@ For this experiment, you will need the following:
     - Amazon Quick Sights allows reporting on datasets directly with custom queries in Athena databases.
 
 
+## 1 - Upload a dataset to Amazon S3
+
 ```bash
 python3 app.py
 ```
 
-```python
-    base_url = "https://s3.amazonaws.com/data-sprints-eng-test/"
-    bucket_name = 'de-bera-nyc-cab-trips'
-    payloads = [
-        ("data-files/data-nyctaxi-trips-2009.json", base_url + "data-sample_data-nyctaxi-trips-2009-json_corrigido.json"),
-        ("data-files/data-nyctaxi-trips-2010.json", base_url + "data-sample_data-nyctaxi-trips-2010-json_corrigido.json"),
-        ("data-files/data-nyctaxi-trips-2011.json", base_url + "data-sample_data-nyctaxi-trips-2011-json_corrigido.json"),
-        ("data-files/data-nyctaxi-trips-2012.json", base_url + "data-sample_data-nyctaxi-trips-2012-json_corrigido.json"),
-        ("data-files/data-vendor_lookup.csv", base_url + "data-vendor_lookup-csv.csv"),
-        ("data-files/data-payment_lookup.csv", base_url + "data-payment_lookup-csv.csv")
-    ]
+### 2 - Create a Data Catalog and squemas for each dataset in S3 by AWS Glue
 
-    for entry in payloads:
-        fetch_jsons(entry)
-        upload_file(entry[0],bucket_name)  
+
+### Create policy
+```bash
+aws iam create-policy \
+--policy-name <NAME> \
+--policy-document file://glue-policy.json
+
+aws iam create-role \
+--role-name <NAME> \
+--assume-role-policy-document file://trust-policy.json
+
+aws iam put-role-policy \
+--role-name <NAME> \
+--policy-name <NAME> \
+--policy-document file://glue-policy.json
 ```
+
+### Create database
+```bash
+aws glue create-database \
+--database-input Name=r8g4
+```
+
+### Create crawler
+```bash
+aws glue create-crawler \
+--name <NOME> \
+--role arn:aws:iam::865118636886:role/<NOME> \
+--database-name <NOME> \
+--targets "{\"S3Targets\":[{\"Path\":\"<s3:NAME>\"}]}" \
+--table-prefix <NOME>_
+```
+
+### Create job
+```bash
+aws glue create-job \
+--name <NAME> \
+--role arn:aws:iam::865118636886:role/<NAME> \
+--command Name=glueetl,ScriptLocation=s3://<NAME>/job-script.py \
+--default-arguments '{
+    "--TempDir":"s3://<NAME>/jobs/temp",
+    "--job-bookmark-option": "job-bookmark-enable",
+    "--scriptLocation": "s3://<NAME>/job-script.py"
+}'
+```
+
+### Start Crawlers
+```bash
+aws glue start-crawler \
+--name <NOME>
+```
+
+### Start Jobs
+```bash
+aws glue start-job-run \
+--job-name <NOME>
+```
+
+After creation of database, crawler and jobs the obhect bellow are created 
+
+### Crawlers
+![Crawlers](screenshots/glue-crawlers.png)
+
+### Jobs
+![Jobs](screenshots/glue-jobs.png)
+
+### Tables 
+![Tables](screenshots/glue-table-schema.png)
 
 
 ## [Analysis Review: For each question the related solution with explanations and evidences](analysis.html)
