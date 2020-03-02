@@ -61,7 +61,86 @@ For this experiment, you will need the following:
     - Amazon Quick Sights allows reporting on datasets directly with custom queries in Athena databases.
 
 
-## [Analysis Review: For each question the related solution with explanations and evidences](analysis.html)
+## 1 - Upload a dataset to Amazon S3
+
+```bash
+python3 app.py
+```
+
+### 2 - Create a Data Catalog and squemas for each dataset in S3 by AWS Glue
+
+
+### Create policy
+```bash
+aws iam create-policy \
+--policy-name <NAME> \
+--policy-document file://glue-policy.json
+
+aws iam create-role \
+--role-name <NAME> \
+--assume-role-policy-document file://trust-policy.json
+
+aws iam put-role-policy \
+--role-name <NAME> \
+--policy-name <NAME> \
+--policy-document file://glue-policy.json
+```
+
+### Create database
+```bash
+aws glue create-database \
+--database-input Name=r8g4
+```
+
+### Create crawler
+```bash
+aws glue create-crawler \
+--name <NOME> \
+--role arn:aws:iam::865118636886:role/<NOME> \
+--database-name <NOME> \
+--targets "{\"S3Targets\":[{\"Path\":\"<s3:NAME>\"}]}" \
+--table-prefix <NOME>_
+```
+
+### Create job
+```bash
+aws glue create-job \
+--name <NAME> \
+--role arn:aws:iam::865118636886:role/<NAME> \
+--command Name=glueetl,ScriptLocation=s3://<NAME>/job-script.py \
+--default-arguments '{
+    "--TempDir":"s3://<NAME>/jobs/temp",
+    "--job-bookmark-option": "job-bookmark-enable",
+    "--scriptLocation": "s3://<NAME>/job-script.py"
+}'
+```
+
+### Start Crawlers
+```bash
+aws glue start-crawler \
+--name <NOME>
+```
+
+### Start Jobs
+```bash
+aws glue start-job-run \
+--job-name <NOME>
+```
+
+After creation of database, crawler and jobs the obhect bellow are created 
+
+### Crawlers
+![Crawlers](screenshots/glue-crawlers.png)
+
+### Jobs
+![Jobs](screenshots/glue-jobs.png)
+
+### Tables 
+![Tables](screenshots/glue-table-schema.png)
+
+Athena can read the database and tables created by Glue.
+
+## [Analysis Review: For each question the related solution with explanations and evidences](Analysis/Analysis.html)
 
 ## References:
 Installing the AWS CLI
