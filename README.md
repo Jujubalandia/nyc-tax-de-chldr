@@ -61,6 +61,28 @@ For this experiment, you will need the following:
     - Amazon Quick Sights allows reporting on datasets directly with custom queries in Athena databases.
 
 
+```bash
+python3 app.py
+```
+
+```python
+    base_url = "https://s3.amazonaws.com/data-sprints-eng-test/"
+    bucket_name = 'de-bera-nyc-cab-trips'
+    payloads = [
+        ("data-files/data-nyctaxi-trips-2009.json", base_url + "data-sample_data-nyctaxi-trips-2009-json_corrigido.json"),
+        ("data-files/data-nyctaxi-trips-2010.json", base_url + "data-sample_data-nyctaxi-trips-2010-json_corrigido.json"),
+        ("data-files/data-nyctaxi-trips-2011.json", base_url + "data-sample_data-nyctaxi-trips-2011-json_corrigido.json"),
+        ("data-files/data-nyctaxi-trips-2012.json", base_url + "data-sample_data-nyctaxi-trips-2012-json_corrigido.json"),
+        ("data-files/data-vendor_lookup.csv", base_url + "data-vendor_lookup-csv.csv"),
+        ("data-files/data-payment_lookup.csv", base_url + "data-payment_lookup-csv.csv")
+    ]
+
+    for entry in payloads:
+        fetch_jsons(entry)
+        upload_file(entry[0],bucket_name)  
+```
+
+
 ## [Analysis Review: For each question the related solution with explanations and evidences](analysis.html)
 
 ## References:
