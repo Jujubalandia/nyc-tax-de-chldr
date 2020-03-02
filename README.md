@@ -18,25 +18,16 @@ Also all dev environment, shell and text editor used are serverless too thanks A
 
 ## Data Used
 
-[Taxi Trips data in New York City 2009](https://s3.amazonaws.com/data-sprints-eng-test/data-sample_data-nyctaxi-trips-2009-json_corrigido.json) 
-[Taxi Trips data in New York City 2010](https://s3.amazonaws.com/data-sprints-eng-test/data-sample_data-nyctaxi-trips-2010-json_corrigido.json)
-[Taxi Trips data in New York City 2011](https://s3.amazonaws.com/data-sprints-eng-test/data-sample_data-nyctaxi-trips-2011-json_corrigido.json)
-[Taxi Trips data in New York City 2012](https://s3.amazonaws.com/data-sprints-eng-test/data-sample_data-nyctaxi-trips-2012-json_corrigido.json) 
-[Vendor Loockup](https://s3.amazonaws.com/data-sprints-eng-test/data-sample_data-nyctaxi-trips-2012-json_corrigido.json) 
-[Payment Loockup](https://s3.amazonaws.com/data-sprints-eng-test/data-sample_data-nyctaxi-trips-2012-json_corrigido.json) 
+- [Taxi Trips data in New York City 2009](https://s3.amazonaws.com/data-sprints-eng-test/data-sample_data-nyctaxi-trips-2009-json_corrigido.json) 
+- [Taxi Trips data in New York City 2010](https://s3.amazonaws.com/data-sprints-eng-test/data-sample_data-nyctaxi-trips-2010-json_corrigido.json)
+- [Taxi Trips data in New York City 2011](https://s3.amazonaws.com/data-sprints-eng-test/data-sample_data-nyctaxi-trips-2011-json_corrigido.json)
+- [Taxi Trips data in New York City 2012](https://s3.amazonaws.com/data-sprints-eng-test/data-sample_data-nyctaxi-trips-2012-json_corrigido.json) 
+- [Vendor Loockup](https://s3.amazonaws.com/data-sprints-eng-test/data-sample_data-nyctaxi-trips-2012-json_corrigido.json)
+- [Payment Loockup](https://s3.amazonaws.com/data-sprints-eng-test/data-sample_data-nyctaxi-trips-2012-json_corrigido.json) 
 
-
-# Walkthrough to reproduce the analysis
-
-### [1 - Upload a dataset to Amazon S3](step-one.md)
-### [2 - Create a Data Catalog and squemas for each dataset in S3 by AWS Glue](step-two.md)
-### [3 - Transform data in tables using Apache Parquet, a compressed columnar format](step-three.md)
-
-## [Analysis Review: For each question the related solution with explanations and evidences](analysis.html)
-
-- [Architecture overview](#architecture-overview)
-- [Prerequisites](#prerequisites)
-- [Setup Tech Stack 4 the Analysis](#the-setup)
+# [Architecture overview](#architecture-overview)
+# [Prerequisites](#prerequisites)
+# [Walkthrough to reproduce the analysis](#the-setup)
 
 ## Architecture overview
 
@@ -51,7 +42,13 @@ For this experiment, you will need the following:
 
 ## The Setup 
 
-Actions to take to anwers the questions:
+### Main steps
+
+### 1 - Upload a dataset to Amazon S3
+### 2 - Create a Data Catalog and squemas for each dataset in S3 by AWS Glue
+### 3 - Transform data in tables using Apache Parquet, a compressed columnar format
+
+### Actions to take to anwers the questions (detailed):
 
 1. App download and datasets form URL intercafes for S3 files
 2. App upload files into Amazon S3
@@ -63,6 +60,8 @@ Actions to take to anwers the questions:
 5. Visualization:
     - Amazon Quick Sights allows reporting on datasets directly with custom queries in Athena databases.
 
+
+## [Analysis Review: For each question the related solution with explanations and evidences](analysis.html)
 
 ## References:
 Installing the AWS CLI
