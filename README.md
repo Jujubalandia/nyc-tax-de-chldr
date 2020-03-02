@@ -6,6 +6,8 @@ transform data to a compressed columnar format that allows to speed up and reduc
 
 This is a serverless furthermore without worry about or having to manage clusters or having to spin up a single instance.
 
+Also all dev environment, shell and text editor used are serverless too thanks Amazon Cloud9 solution.
+
 # Services in use:
 
 - [AWS S3](https://aws.amazon.com/s3/) for data storage
@@ -24,56 +26,32 @@ This is a serverless furthermore without worry about or having to manage cluster
 [Payment Loockup](https://s3.amazonaws.com/data-sprints-eng-test/data-sample_data-nyctaxi-trips-2012-json_corrigido.json) 
 
 
-# Walkthrough for reproduce the analysis
+# Walkthrough to reproduce the analysis
 
-### [1- Upload a dataset to Amazon S3](step-one.md)
-### [2- Create a Data Catalog and squemas for each dataset in S3 by AWS Glue](step-two.md)
-### [3- Transform data in tables using Apache Parquet, a compressed columnar format](step-three.md)
+### [1 - Upload a dataset to Amazon S3](step-one.md)
+### [2 - Create a Data Catalog and squemas for each dataset in S3 by AWS Glue](step-two.md)
+### [3 - Transform data in tables using Apache Parquet, a compressed columnar format](step-three.md)
 
 ## [Analysis Review: For each question the related solution with explanations and evidences](analysis.html)
 
 - [Architecture overview](#architecture-overview)
 - [Prerequisites](#prerequisites)
-- [Deployment of the experiment](#deployment-of-the-experiment)
-  - [Downloading necessary data](#downloading-necessary-data)
-  - [Building the CDK application](#building-the-cdk-application)
-  - [Deploying the stack and upload the data](#deploying-the-stack-and-upload-the-data)
-  - [Deploying Amazon QuickSight](#deploying-amazon-quicksight)
-    - [Preparing the Manifest file](#preparing-the-manifest-file)
-    - [Signing\-up](#signing-up)
-    - [Creating a dataset](#creating-a-dataset)
-- [Exploring the demo](#exploring-the-demo)
-  - [Launching the experiment](#launching-the-experiment)
-    - [Launching the producer](#launching-the-producer)
-    - [Launching the Kinesis Data Analytics Application](#launching-the-kinesis-data-analytics-application)
-  - [Producer](#producer)
-    - [Architecture overview of the producer layer](#architecture-overview-of-the-producer-layer)
-    - [Lambda function](#lambda-function)
-    - [AWS Fargate](#aws-fargate)
-  - [Ingestion](#ingestion)
-    - [Architecture overview of the ingestion layer](#architecture-overview-of-the-ingestion-layer)
-    - [Kinesis Data Firehose](#kinesis-data-firehose)
-    - [S3](#s3)
-  - [Enhancement](#enhancement)
-    - [Architecture overview of the enhancement layer](#architecture-overview-of-the-enhancement-layer)
-    - [S3 for referential data](#s3-for-referential-data)
-    - [Kinesis Data analytics SQL application](#kinesis-data-analytics-sql-application)
-    - [AWS Lambda as a destination for a kinesis data analytics](#aws-lambda-as-a-destination-for-a-kinesis-data-analytics)
-  - [Visualization](#visualization)
-    - [Architecture overview of the visualization layer](#architecture-overview-of-the-visualization-layer)
-    - [CloudWatch](#cloudwatch)
-    - [QuickSight](#quicksight)
-- [Cost](#cost)
-- [Solutions alternatives](#solutions-alternatives)
-- [Develop](#develop)
-  - [Start watching for changes](#start-watching-for-changes)
-  - [Useful commands](#useful-commands)
-- [Clean up](#clean-up)
-- [Inspiring source of information](#inspiring-source-of-information)
+- [Setup Tech Stack 4 the Analysis](#the-setup)
 
 ## Architecture overview
 
 ![Architecture](screenshots/arch.png)
+
+## Prerequisites
+
+For this experiment, you will need the following:
+
+- The [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-install.html)
+- An AWS account. [here](https://portal.aws.amazon.com/billing/signup/iam).
+
+## The Setup 
+
+Actions to take to anwers the questions:
 
 1. App download and datasets form URL intercafes for S3 files
 2. App upload files into Amazon S3
@@ -86,12 +64,7 @@ This is a serverless furthermore without worry about or having to manage cluster
     - Amazon Quick Sights allows reporting on datasets directly with custom queries in Athena databases.
 
 
-# Directory Structure of this solution
-
-![Structure](screenshots/dir.png)
-
-
-# References:
+## References:
 Installing the AWS CLI
 https://docs.aws.amazon.com/cli/latest/userguide/installing.html
 
