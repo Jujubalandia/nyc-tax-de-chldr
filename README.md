@@ -138,8 +138,9 @@ After creation of database, crawler and jobs the obhect bellow are created
 ### Tables 
 ![Tables](screenshots/glue-table-schema.png)
 
+Athena can read the database and tables created by Glue.
 
-## [Analysis Review: For each question the related solution with explanations and evidences](analysis.html)
+## [Analysis Review: For each question the related solution with explanations and evidences](Analysis/Analysis.html)
 
 ## References:
 Installing the AWS CLI
